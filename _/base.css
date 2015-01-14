@@ -24,7 +24,7 @@
   	font-size: 1.2em;
   	line-height: 1.2em;
   	background: #FDF6E3;
-  	COLOR: #475B62;
+  	color: #475B62;
   }
 
   strong
@@ -46,17 +46,17 @@
   	margin-bottom: .5em;
   }
 
-  .container
+  main, header, footer
   {
   	width: 80%;
   	max-width: 1200px;
   	margin: 0 auto;
-  	margin-top: 10px;
+  	margin-top: 10px;  	
   }
 
   @media all and (max-width: 500px)
   {
-  	h2
+  	h1
   	{
   		padding-left: 10px;
   		text-align: center;
