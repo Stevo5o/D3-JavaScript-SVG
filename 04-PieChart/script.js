@@ -14,20 +14,20 @@ var piedata = [
       value: 50
    },
    {
-      label: "Jimmy",
-      value: 50
+      label: "Crean",
+      value: 80
    },
    {
       label: "Omar",
-      value: 50
+      value: 20
    },
    {
       label: "Bunk",
       value: 50
    },
    {
-      label: "Snoop",
-      value: 50
+      label: "StephCake",
+      value: 100
    }
 ];
 
@@ -40,9 +40,11 @@ var pie = d3.layout.pie()
 var arc = d3.svg.arc()
         .outerRadius( radius )
 
-var myChart = d3.select( '#chart' ).append( 'svg' )
-        .attr( 'width', width )
-        .attr( 'height', height )
+var myChart = d3.select( '#piechart' ).append( 'svg' )
+        .attr( 'width', '100%' )
+        .attr( 'height', '100%' )
+    .attr('viewBox','0 0 '+Math.min(width,height)+' '+Math.min(width,height))
+    .attr('preserveAspectRatio','xMinYMin')
         .append( 'g' )
         .attr( 'transform', 'translate(' + ( width - radius ) + ', ' + ( height - radius ) + ' )' )
         .selectAll( 'path' ).data( pie( piedata ) )
@@ -71,3 +73,4 @@ var text = d3.selectAll('g.slice')
   d.outerRadius = radius;
   return 'translate('+ arc.centroid(d) +')'
 })
+

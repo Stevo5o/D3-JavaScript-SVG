@@ -1,0 +1,13 @@
+#barchart, #piechart{
+   float:left;
+   padding:0px 20px;
+   clear:right; 
+   margin-left:20px;  
+}
+
+footer{
+   margin-top:80px;
+   clear:both;
+   background:whitesmoke;
+   text-align: center;
+}

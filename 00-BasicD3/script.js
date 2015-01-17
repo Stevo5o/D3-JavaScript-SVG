@@ -73,4 +73,72 @@ d3.selectAll('#chart').selectAll('div')
               return d.width + 'px';
            }
         });
+        
+var numbers = [ 21, 39, 79, 49, 48, 29, 26, 66, 12, 61, 90, 49, 43 ];
+var numbersMinValue = d3.min(numbers);
+var numbersMaxValue = d3.max(numbers);
+var numbersLoHiValue = d3.extent(numbers);
+console.log(numbersMinValue, numbersMaxValue, numbersLoHiValue);
+
+   var donuts =
+           [
+              {
+                 key: 'Glazed',
+                 value: 132
+              },
+              {
+                 key: 'Jelly',
+                 value: 71
+              },
+              {
+                 key: 'Holes',
+                 value: 337
+              },
+              {
+                 key: 'Sprinkles',
+                 value: 93
+              },
+              {
+                 key: 'Crumb',
+                 value: 78
+              },
+              {
+                 key: 'Chocolate',
+                 value: 43
+              },
+              {
+                 key: 'Coconut',
+                 value: 20
+              },
+              {
+                 key: 'Cruller',
+                 value: 30
+              },
+              {
+                 key: 'Éclair',
+                 value: 8
+              },
+              {
+                 key: 'Fritter',
+                 value: 17
+              },
+              {
+                 key: 'baerclaw',
+                 value: 21
+              }
+           ];
+var donutsMinValue = d3.min(donuts, function(d)
+  {
+    return d.value;
+  });
+var donutsMaxValue = d3.max(donuts, function(d)
+  {
+    return d.value;
+  });
+var donutsLoHiValue = d3.extent(donuts, function(d)
+  {
+    return d.value;
+  });
+
+console.log(donutsMinValue, donutsMaxValue, donutsLoHiValue);
 
