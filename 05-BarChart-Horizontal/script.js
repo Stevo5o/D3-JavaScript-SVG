@@ -79,11 +79,11 @@
            .range( [ "#572500", "#F68026" ] );
    var ordinalColorScale = d3.scale.category20();
    var xAxis = d3.svg.axis()
-                .scale(x)
-                .orient('bottom'); 
+           .scale( x )
+           .orient( 'bottom' );
    var yAxis = d3.svg.axis()
-                .scale(y)
-                .orient('left'); 
+           .scale( y )
+           .orient( 'left' );
    var svg = d3.select( "body" ).append( 'svg' )
            .attr( 'id', 'chart' )
            .attr( 'width', w )
@@ -114,7 +114,7 @@
               } )
               .style( "fill", function ( d, i )
               {
-                return ordinalColorScale(i);
+                 return ordinalColorScale( i );
                  // return linearColorScale( i );
               } );
       this.selectAll( ".bar-label" )
@@ -139,15 +139,15 @@
               {
                  return d.value;
               } )
-      this.append('g')
-              .classed('x axis', true)
-              .attr('transform', "translate(" + 0 + "," + height + ")")
-              .call(xAxis); 
+      this.append( 'g' )
+              .classed( 'x axis', true )
+              .attr( 'transform', "translate(" + 0 + "," + height + ")" )
+              .call( xAxis );
 
-      this.append('g')
-              .classed('y axis', true)
-              .attr('transform', "translate(0,0)")
-              .call(yAxis);
+      this.append( 'g' )
+              .classed( 'y axis', true )
+              .attr( 'transform', "translate(0,0)" )
+              .call( yAxis );
    };
    plot.call( chart, {
       data: data
