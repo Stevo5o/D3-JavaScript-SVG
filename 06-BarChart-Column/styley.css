@@ -8,8 +8,7 @@
   body, html
   {
   	font-family: "Exo 2", "Helvetica Neue", Helvetica, sans-serif;
-  	font-weight: 300;
-  	font-size: 1.2em;
+  	font-weight: 300;  	
   	line-height: 1.2em;
   	background: #FDF6E3;
   	color: #475B62;
@@ -83,7 +82,7 @@
 {
    fill: #000;   
    text-anchor:middle;
-   font-size: 24px;
+   font-size: 18px;
 }
 .axis path, .axis line
 {
