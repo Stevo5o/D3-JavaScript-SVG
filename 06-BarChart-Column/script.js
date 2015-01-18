@@ -150,7 +150,7 @@
       this.append('g')
               .classed('x axis', true)
               .attr('transform', "translate(" + 0 + "," + height + ")")
-              .call(xAxis)
+              .call(params.axis.x)
                   .selectAll('text')
                       .style('text-anchor', 'end')
                       .attr('dx', -8)
@@ -160,7 +160,7 @@
       this.append('g')
               .classed('y axis', true)
               .attr('transform', "translate(0,0)")
-              .call(yAxis);
+              .call(params.axis.y);
 
       this.select('.y.axis')
               .append('text')
@@ -179,6 +179,12 @@
               .text('Donut Type'); 
    };
    plot.call( chart, {
-      data: data
+      data: data,
+      axis: 
+              {
+                 x: xAxis,
+                 y: yAxis
+              },
+              gridlines: yGridlines 
    } );
 }() );
