@@ -44,3 +44,14 @@ footer
    border: 1px solid #CCC;  
 }
 
+.bar 
+{
+   fill: purple;
+   shape-rendering: crispEdges;
+}
+.bar-label
+{
+   fill: white;   
+   text-anchor:end;
+   font-size: 24px;
+}
