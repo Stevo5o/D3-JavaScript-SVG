@@ -149,6 +149,10 @@
       {
           // update info
           this.selectAll('g.x.axis')
+              .transition()
+              .duration(500)
+              .ease('bounce')
+              .delay(500)
             .call(params.axis.x) 
           this.selectAll('.x-axis-label')           
               .style('text-anchor', 'end')
@@ -156,6 +160,10 @@
                   .attr('dy', 8)
                   .attr('transform', 'translate(0,0) rotate(-45)')
           this.selectAll('g.y.axis')
+              .transition()
+              .duration(500)
+              .ease('bounce')
+              .delay(500)
             .call(params.axis.y)
       }
    }
@@ -177,7 +185,19 @@
               .data( params.data )
               .enter()
                 .append( 'rect' )
-                .classed( 'bar', 'true' );
+                .classed( 'bar', 'true' )
+                .on('mouseover', function( d, i )
+                  {
+                      d3.select(this).style('fill', 'yellow');
+                  })
+                .on('mousemove', function( d, i )
+                  {
+                      
+                  })
+                .on('mouseout', function( d, i )
+                  {
+                      d3.select(this).style('fill', ordinalColorScale(i));
+                  });
 
       this.selectAll( ".bar-label" )
               .data( params.data )
@@ -187,6 +207,10 @@
 
       // update()
       this.selectAll('.bar')
+          .transition()
+          .duration(500)
+          .ease('bounce')
+          .delay(500)
           .attr( 'x', function(d, i)
           {
             return x(d.key);
@@ -209,6 +233,10 @@
           } );
 
       this.selectAll('.bar-label')
+          .transition()
+          .duration(500)
+          .ease('bounce')
+          .delay(500)
           .attr( 'x', function ( d , i )
           {
              return x( d.key ) + ( x.rangeBand()/2);
@@ -233,11 +261,8 @@
       this.selectAll('.bar-label')
           .data(params.data)
           .exit()
-          .remove();
-
-      
+          .remove();      
    };
-
    sort_btn.on('click', function()
    {
     var self = d3.select(this);

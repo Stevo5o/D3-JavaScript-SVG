@@ -216,3 +216,4 @@ var text = d3.selectAll('g.slice')
   d.outerRadius = radius;
   return 'translate('+ arc.centroid(d) +')'
 })
+

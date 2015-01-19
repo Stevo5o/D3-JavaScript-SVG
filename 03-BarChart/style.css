@@ -1,13 +1,24 @@
 #barchart, #piechart{
    float:left;
-   padding:0px 20px;
+   padding:20px;
    clear:right; 
    margin-left:20px;  
 }
 
 footer{
-   margin-top:80px;
+   margin-top:32%;
    clear:both;
-   background:whitesmoke;
+   background:white;
    text-align: center;
+}
+
+#piechart
+{
+   background-color: white;
+   width: 33.3%;
+}
+
+#barchart
+{
+   background-color: white;
 }
