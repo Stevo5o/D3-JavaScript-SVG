@@ -18,6 +18,7 @@
    var chart = svg.append( "g" )
            .classed( "display", true )
            .attr( "transform", "translate(" + margin.left + "," + margin.top + ")" );
+   var colorScale = d3.scale.category10();
    var x = d3.scale.linear()
            .domain( d3.extent( data, function ( d )
            {
@@ -69,7 +70,7 @@
             .call(params.axis.gridlines.x);
          this.append( "g" )
                  .classed( "gridline y", true )
-                 .attr( "transform", "translate(0,0" )
+                 .attr( "transform", "translate(0,0)" )
                  .call( params.axis.gridlines.y );
           this.append("g")
             .classed("axis x", true)
@@ -77,7 +78,7 @@
             .call(params.axis.x)
          this.append( "g" )
                  .classed( "axis y", true )
-                 .attr( "transform", "translate(0,0" )
+                 .attr( "transform", "translate(0,0)" )
                  .call( params.axis.y );
       }
    }
@@ -90,6 +91,7 @@
          return d !== "age" && d !== "responses";
       } );
 
+      // enter() for the groups
       this.selectAll( ".donut" )
               .data( donuts )
               .enter()
@@ -99,6 +101,14 @@
                  return d;
               } )
               .classed( "donut", true );
+
+      // update for groups
+      this.selectAll(".donut")
+      .style("fill", function(d,i)
+      {
+          return colorScale(i);
+      })
+
 
       donuts.forEach( function ( donut )
       {
