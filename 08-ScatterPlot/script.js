@@ -6,7 +6,7 @@
    var margin = {
       top: 60,
       bottom: 80,
-      left: 80,
+      left: 100,
       right: 80
    };
    var width = w - margin.left - margin.right;
@@ -20,10 +20,6 @@
            .attr( "transform", "translate(" + margin.left + "," + margin.top + ")" );
    var colorScale = d3.scale.category10();
    var x = d3.scale.linear()
-           .domain( d3.extent( data, function ( d )
-           {
-              return d.age;
-           } ) )
            .range( [ 0, width ] );
    var y = d3.scale.linear()
            .domain( [ 1, 5 ] )
@@ -53,11 +49,7 @@
            .tickSize( -width, 0, 0 )
            .tickFormat( "" )
            .orient( "left" );
-   var responseScale = d3.scale.linear()
-           .domain( d3.extent( data, function ( d )
-           {
-              return d.responses;
-           } ) )
+   var responseScale = d3.scale.linear()           
            .range( [ 2, 15 ] );
 
    function drawAxis( params )
@@ -80,10 +72,33 @@
                  .classed( "axis y", true )
                  .attr( "transform", "translate(0,0)" )
                  .call( params.axis.y );
+        this.select(".y.axis")
+        .append("text")
+        .classed("y axis-label", true)
+        .attr("transform", "translate("+ -56 + "," + height/2 + ") rotate(-90)")
+        .text("Rating (1=Low,5=High)")
+        this.select(".x.axis")
+        .append("text")
+        .classed("x axis-label", true)
+        .attr("transform", "translate(" + width/2 + "," + 48 + ")")
+        .text("Customer age");
+        this.append("g")
+        .append("text")
+        .classed("chart-header", true)
+        .attr("transform", "translate(0,-24)")
+        .text("")
       }
    }
    function plot( params )
    {
+    x.domain( d3.extent( params.data, function ( d )
+           {
+              return d.age;
+           } ) );
+    responseScale.domain( d3.extent( params.data, function ( d )
+           {
+              return d.responses;
+           } ) )
       drawAxis.call( this, params );
       var self = this;
       var donuts = d3.keys( params.data[0] ).filter( function ( d )
@@ -108,7 +123,18 @@
       {
           return colorScale(i);
       })
-
+      .on("mouseover", function(d,i)
+      {
+        d3.select(this)
+        .transition()
+        .style("opacity", 1)
+      })
+      .on("mouseout", function(d,i)
+      {
+        d3.select(this)
+        .transition()
+        .style("opacity", 0.1)
+      });
 
       donuts.forEach( function ( donut )
       {
@@ -143,7 +169,18 @@
                  {
                     return y( d.value );
                  } )
-
+                .on("mouseover", function(d,i)
+                {
+                   var str = d.key + " Donut: ";
+                   str += "Age: " + d.age + " ";
+                   str += "Responses: " + d.responses + " ";
+                   str += "Average Rating: " + d.value;
+                   d3.select(".chart-header").text(str);
+                }) 
+                .on("mouseout", function(d,i)
+                {
+                  d3.select(".chart-header").text("");
+                })
                  // exit()
                  .selectAll( ".response" )
                  .data( arr )
@@ -151,8 +188,11 @@
                  .remove();
       } );
    }
+
+   d3.csv("_/survey_data.csv", function(error, parsed_data) 
+  {    
    plot.call( chart, {
-      data: data,
+      data: parsed_data,
       axis: {
          x: xAxis, 
          y: yAxis,
@@ -163,5 +203,7 @@
                  }
       },
       initialize: true
-   } );
+   } )
+    });
+
 }() );
