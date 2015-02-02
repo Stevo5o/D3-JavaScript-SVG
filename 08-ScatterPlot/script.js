@@ -27,14 +27,44 @@
    var y = d3.scale.linear()
            .domain( [ 1, 5 ] )
            .range( [ height, 0 ] );
+   var yAxis = d3.svg.axis()
+           .scale( y )
+           .ticks( 5 )
+           .tickSize( 20 )
+           .tickFormat( function ( d )
+           {
+              return d.toFixed( 1 );
+           } )
+           .orient( "left" );
+   var yGridlines = d3.svg.axis()
+           .scale( y )
+           .tickSize( -width, 0, 0 )
+           .tickFormat( "" )
+           .orient( "left" );
    var responseScale = d3.scale.linear()
            .domain( d3.extent( data, function ( d )
            {
               return d.responses;
            } ) )
            .range( [ 2, 15 ] );
+
+   function drawAxis( params )
+   {
+      if ( params.initialize )
+      {
+         this.append( "g" )
+                 .classed( "gridline y", true )
+                 .attr( "transform", "translate(0,0" )
+                 .call( params.axis.gridlines.y )
+         this.append( "g" )
+                 .classed( "axis y", true )
+                 .attr( "transform", "translate(0,0" )
+                 .call( params.axis.y );
+      }
+   }
    function plot( params )
    {
+      drawAxis.call( this, params );
       var self = this;
       var donuts = d3.keys( params.data[0] ).filter( function ( d )
       {
@@ -44,55 +74,63 @@
       this.selectAll( ".donut" )
               .data( donuts )
               .enter()
-                .append( "g" )
-                .attr( "class", function ( d )
-                {
-                   return d;
-                } )
-                .classed("donut", true);
+              .append( "g" )
+              .attr( "class", function ( d )
+              {
+                 return d;
+              } )
+              .classed( "donut", true );
 
-      donuts.forEach(function(donut)
+      donuts.forEach( function ( donut )
       {
-          var g = self.selectAll("g." + donut );
-          var arr = params.data.map(function(d)
-            {
-              return{
-                key: donut,
-                value: d[donut],
-                age: d.age,
-                responses: d.responses
-              };
-            });
-          // enter()
-          g.selectAll(".response")
-              .data(arr)
-              .enter()
-                  .append("circle")
-                  .classed("response", true)
+         var g = self.selectAll( "g." + donut );
+         var arr = params.data.map( function ( d )
+         {
+            return{
+               key: donut,
+               value: d[donut],
+               age: d.age,
+               responses: d.responses
+            };
+         } );
+         // enter()
+         g.selectAll( ".response" )
+                 .data( arr )
+                 .enter()
+                 .append( "circle" )
+                 .classed( "response", true )
 
-          // update()
-          g.selectAll(".response")
-              .attr("r", function(d)
-              {
-                  return responseScale(d.responses);
-              })
-              .attr("cx", function(d)
-              {
-                  return x(d.age);
-              })
-              .attr("cy", function(d)
-              {
-                  return y(d.value);
-              })
+         // update()
+         g.selectAll( ".response" )
+                 .attr( "r", function ( d )
+                 {
+                    return responseScale( d.responses );
+                 } )
+                 .attr( "cx", function ( d )
+                 {
+                    return x( d.age );
+                 } )
+                 .attr( "cy", function ( d )
+                 {
+                    return y( d.value );
+                 } )
 
-          // exit()
-          .selectAll(".response")
-              .data(arr)
-              .exit()
-              .remove();
-      });
+                 // exit()
+                 .selectAll( ".response" )
+                 .data( arr )
+                 .exit()
+                 .remove();
+      } );
    }
    plot.call( chart, {
-      data: data
+      data: data,
+      axis: {
+         y: yAxis,
+         gridlines:
+                 {
+                    y: yGridlines
+                 }
+      },
+      initialize: true
    } );
 }() );
