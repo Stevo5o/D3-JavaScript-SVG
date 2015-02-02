@@ -27,6 +27,17 @@
    var y = d3.scale.linear()
            .domain( [ 1, 5 ] )
            .range( [ height, 0 ] );
+           var tickValues = [18, 25, 32, 39, 46, 53, 60, 67, 74]
+   var xAxis = d3.svg.axis()
+   .scale(x)
+   .tickValues(tickValues)
+   .orient("bottom");
+   var xGridlines = d3.svg.axis()
+   .scale(x)
+   .tickValues(tickValues)
+   .tickSize(-height, -height)
+   .tickFormat("")
+   .orient("bottom");
    var yAxis = d3.svg.axis()
            .scale( y )
            .ticks( 5 )
@@ -52,10 +63,18 @@
    {
       if ( params.initialize )
       {
+        this.append("g")
+            .classed("gridline x", true)
+            .attr("transform", "translate(0," + height + ")")
+            .call(params.axis.gridlines.x);
          this.append( "g" )
                  .classed( "gridline y", true )
                  .attr( "transform", "translate(0,0" )
-                 .call( params.axis.gridlines.y )
+                 .call( params.axis.gridlines.y );
+          this.append("g")
+            .classed("axis x", true)
+            .attr("transform", "translate(0," + height + ")")
+            .call(params.axis.x)
          this.append( "g" )
                  .classed( "axis y", true )
                  .attr( "transform", "translate(0,0" )
@@ -125,9 +144,11 @@
    plot.call( chart, {
       data: data,
       axis: {
+         x: xAxis, 
          y: yAxis,
          gridlines:
                  {
+                    x: xGridlines,
                     y: yGridlines
                  }
       },
